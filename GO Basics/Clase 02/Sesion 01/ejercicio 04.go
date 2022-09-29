@@ -1,8 +1,9 @@
 package main
 
 import (
-	// "errors"
+	"errors"
 	"fmt"
+	"math"
 )
 
 const (
@@ -11,20 +12,55 @@ const (
 	maximum = "maximum"
 )
 
-func getMinimum(num1, num2 float64)(minimum float64){
-	minimum = num1
-	if num2 > num1 {
-		minimum = num2
+func getMinimum(numbers ...float64) (minimum float64) {
+	minimum = math.Inf(1)
+
+	for _, number := range numbers {
+		if number < minimum {
+			minimum = number
+		}
 	}
 	return
 }
 
-func main(){
-	fmt.Println(getMinimum(3,2))
+func getMaximum(numbers ...float64) (maximum float64) {
+	maximum = math.Inf(-1)
+	for _, number := range numbers {
+		if number > maximum {
+			maximum = number
+		}
+	}
+	return
 }
 
-// func operation (){}
+func getAverage(numbers ...float64) (average float64) {
+	average = 0
+	for _, number := range numbers {
+		average += number
+	}
+	return average / float64(len(numbers))
+}
 
-// minFunc, err := operation(minimum)
-// averageFunc, err := operation(average)
-// maxFunc, err := operation(maximum)
+func operation(operationName string) (function func(...float64) float64, err error) {
+	switch operationName {
+	case minimum:
+		function = getMinimum
+	case maximum:
+		function = getMaximum
+	case average:
+		function = getAverage
+	default:
+		err = errors.New("unknown operation: " + operationName)
+	}
+	return
+}
+
+func main() {
+	maxFunction, _ := operation(maximum)
+	minFunction, _ := operation(minimum)
+	avgFunction, _ := operation(average)
+
+	fmt.Println(maxFunction(1, 2, 3, 4, 5))
+	fmt.Println(minFunction(1, 2, 3, 4, 5))
+	fmt.Println(avgFunction(1, 2, 3, 4, 5))
+}
