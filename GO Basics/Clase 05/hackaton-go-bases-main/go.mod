@@ -1,3 +1,3 @@
-module github.com/bootcamp-go/hackaton-go-bases
+module hackaton
 
-go 1.18
+go 1.19
