@@ -1,9 +1,7 @@
 package file
 
 import (
-	"fmt"
 	"hackaton/internal/service"
-	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -39,8 +37,8 @@ func (f *File) Read() (tickets []service.Ticket, err error) {
 }
 
 func (f *File) Write(service.Ticket) (err error) {
-	io.Open(f.Path, fmt.Sprintf("%s,%s,%s,%s,%s,%s",service.Ticket.Id,service.Ticket.Names,service.Ticket.Email,service.Ticket.Destination,service.Ticket.Date,service.Ticket.Price)
+	// io.Open(f.Path, fmt.Sprintf("%s,%s,%s,%s,%s,%s",service.Ticket.Id,service.Ticket.Names,service.Ticket.Email,service.Ticket.Destination,service.Ticket.Date,service.Ticket.Price)
 
-	)
+	// )
 	return nil
 }

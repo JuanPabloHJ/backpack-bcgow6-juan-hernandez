@@ -5,18 +5,25 @@ import (
 	"os"
 )
 
+type Product struct {
+	Id       string
+	Price    float64
+	Quantity int
+}
 
-func main(){
-	fmt.Println("")
-	text := []byte("ID;Precio;Cantidad\n111223;50000;4\n224411;45000;2\n332244;2500;20\n")
-	os.WriteFile("ejercicio 01.csv", text, 0644)
+func AddProducts(archivePath string, products ...Product) {
+	var text string
+	for _, product := range products {
+		text += fmt.Sprintf("%v;%.1f;%d\n", product.Id, product.Price, product.Quantity)
+	}
+	os.WriteFile(archivePath, []byte(text), 0644)
+}
 
+func main() {
+	// fmt.Println("")
+	p1 := Product{Id: "2", Price: 22, Quantity: 33}
+	p2 := Product{Id: "3", Price: 33, Quantity: 44}
 
+	AddProducts("archive.csv", p1, p2)
 
-
-	// files, _ := os.ReadDir(".")
-
-	// for _, file := range files {
-    //     fmt.Println(file.Name())
-    // }
 }
