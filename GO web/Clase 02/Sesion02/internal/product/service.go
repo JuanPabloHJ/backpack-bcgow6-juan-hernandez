@@ -10,6 +10,7 @@ type Service interface {
 		code string,
 		published bool,
 		creationDate string) (Product, error)
+	Delete(id int) error
 }
 
 type service struct {
@@ -46,4 +47,14 @@ func (s *service) Store(id int, name string, color string, price float64, stock 
 		return Product{}, err
 	}
 	return product, nil
+}
+
+func (s *service) Delete(id int) error {
+	err := s.repository.Delete(id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

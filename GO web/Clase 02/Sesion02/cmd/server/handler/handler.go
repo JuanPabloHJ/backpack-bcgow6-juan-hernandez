@@ -70,3 +70,27 @@ func (c *Product) Store() gin.HandlerFunc {
 		ctx.JSON(200, p)
 	}
 }
+
+func (c *Product) Delete() gin.HandlerFunc {
+
+	return func(ctx *gin.Context) {
+		var req request
+		if err := ctx.Bind(&req); err != nil {
+			ctx.JSON(404, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		err := c.service.Delete(req.Id)
+
+		if err != nil {
+			ctx.JSON(404, gin.H{
+				"error": err.Error(),
+			})
+		}
+
+		ctx.JSON(204, nil)
+
+	}
+}

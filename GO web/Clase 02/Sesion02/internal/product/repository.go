@@ -1,5 +1,7 @@
 package product
 
+import "errors"
+
 // Variables
 var products []Product
 var lastID int
@@ -20,6 +22,7 @@ type Repository interface {
 	GetAll() ([]Product, error)
 	Store(id int, name string, color string, price float64, stock int, code string, published bool, creationDate string) (Product, error)
 	lastID() (int, error)
+	Delete(id int) error
 }
 
 // Streuct repository
@@ -50,6 +53,19 @@ func (r *repository) Store(id int, name string, color string, price float64, sto
 	lastID = product.Id
 
 	return product, nil
+}
+
+func (r *repository) Delete(id int) error {
+
+	for i, p := range products {
+		if p.Id == id {
+			products[i] = products[len(products)-1]
+			products = products[:len(products)-1]
+			return nil
+		}
+	}
+
+	return errors.New("product not found")
 }
 
 func NewRepository() Repository {
