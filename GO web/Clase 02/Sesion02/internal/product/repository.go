@@ -1,6 +1,8 @@
 package product
 
-import "errors"
+import (
+	"errors"
+)
 
 // Variables
 var products []Product
@@ -19,13 +21,15 @@ type Product struct {
 }
 
 type Repository interface {
-	GetAll() ([]Product, error)
-	Store(id int, name string, color string, price float64, stock int, code string, published bool, creationDate string) (Product, error)
-	lastID() (int, error)
 	Delete(id int) error
+	GetAll() ([]Product, error)
+	lastID() (int, error)
+	PatchNamePrice(id int, name string, price float64) (Product, error)
+	Put(id int, name string, color string, price float64, stock int, code string, published bool, creationDate string) (Product, error)
+	Store(id int, name string, color string, price float64, stock int, code string, published bool, creationDate string) (Product, error)
 }
 
-// Streuct repository
+// Struct repository
 
 type repository struct{}
 
@@ -55,6 +59,29 @@ func (r *repository) Store(id int, name string, color string, price float64, sto
 	return product, nil
 }
 
+func (r *repository) Put(id int, name string, color string, price float64, stock int, code string, published bool, creationDate string) (Product, error) {
+
+	product := Product{
+		Id:           id,
+		Name:         name,
+		Color:        color,
+		Price:        price,
+		Stock:        stock,
+		Code:         code,
+		Published:    published,
+		CreationDate: creationDate}
+
+	for i, p := range products {
+		if id == p.Id {
+			products[i] = product
+			return product, nil
+		}
+	}
+
+	return Product{}, errors.New("Product not found")
+
+}
+
 func (r *repository) Delete(id int) error {
 
 	for i, p := range products {
@@ -66,6 +93,20 @@ func (r *repository) Delete(id int) error {
 	}
 
 	return errors.New("product not found")
+}
+
+func (r *repository) PatchNamePrice(id int, name string, price float64) (Product, error) {
+	for i, p := range products {
+		if p.Id == id {
+			products[i].Price = price
+			products[i].Name = name
+
+			return products[i], nil
+
+		}
+	}
+
+	return Product{}, errors.New("Product not found")
 }
 
 func NewRepository() Repository {

@@ -16,11 +16,13 @@ func main() {
 	pr := r.Group("/products")
 
 	{
-		pr.POST("/", p.Store())
-		pr.GET("/", p.GetAll())
 		pr.DELETE("/", p.Delete())
+		pr.GET("/", p.GetAll())
+		pr.PATCH("/", p.PatchNamePrice())
+		pr.POST("/", p.Store())
+		pr.PUT("/", p.Put())
+
 	}
 
 	r.Run()
-
 }
