@@ -1,0 +1,18 @@
+
+¿Cuáles son las diferencias entre White Box y Black Box?
+En el método de caja negra no se conocen u omiten las operaciones que ocurren en el código, solo se sabe la entrada y salida esperadas por lo cual sólo se evalúa si las salidas son las correctas según las entradas, mientras que, en el método de caja blanca se conoce el funcionamiento interno del código por lo cual se evalúa de manera más profunda módulo a módulo.
+
+¿Qué es un test funcional?
+Un test funcional es el que se hace directamente en el software después de haber pasado por las pruebas unitarias y de integración prueba cada funcionalidad y cada caso para cerciorarse de que funciona como debería.
+
+¿Qué es un Test de Integración?
+Un test de integración es el que se da al probar varios componentes y como interactuan juntos como pueden ser bases de datos, funciones y demás componentes acoplados
+
+Indicar las dimensiones de calidad prioritarias en MELI
+Los principios usados en meli son los FIRST 
+- Fast:Qué sean rápidos de ejecutar
+- Isolated / Independent: Que no tengan un orden o dependencia de otros para funcionar
+- Repeatable: Que sean deterministicos es decir repetibles
+- Self validating: Que se puedan validar de forma automatizada
+- Thorough: Que abarquen todas los funcionalidades, casos borde y todo lo necesario
+

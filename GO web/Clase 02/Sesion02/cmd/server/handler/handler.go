@@ -3,6 +3,8 @@ package handler
 import (
 	"Sesion02/internal/product"
 
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -74,22 +76,20 @@ func (c *Product) Store() gin.HandlerFunc {
 func (c *Product) Delete() gin.HandlerFunc {
 
 	return func(ctx *gin.Context) {
-		var req request
-		if err := ctx.Bind(&req); err != nil {
-			ctx.JSON(404, gin.H{
+		id, err := strconv.Atoi(ctx.GetHeader("id"))
+
+		if err != nil {
+			ctx.JSON(401, gin.H{
 				"error": err.Error(),
 			})
-			return
 		}
-
-		err := c.service.Delete(req.Id)
+		err = c.service.Delete(id)
 
 		if err != nil {
 			ctx.JSON(404, gin.H{
 				"error": err.Error(),
 			})
 		}
-
 		ctx.JSON(204, nil)
 
 	}
@@ -98,15 +98,23 @@ func (c *Product) Delete() gin.HandlerFunc {
 func (c *Product) Put() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req request
+
 		if err := ctx.Bind(&req); err != nil {
 			ctx.JSON(404, gin.H{
 				"error": err.Error(),
 			})
 			return
 		}
+		id, err := strconv.Atoi(ctx.GetHeader("id"))
+
+		if err != nil {
+			ctx.JSON(401, gin.H{
+				"error": err.Error(),
+			})
+		}
 		complete := true
 
-		if req.Id == 0 {
+		if id == 0 {
 			complete = false
 		}
 		if req.Name == "" {
@@ -134,8 +142,7 @@ func (c *Product) Put() gin.HandlerFunc {
 			})
 			return
 		}
-
-		p, err := c.service.Put(req.Id, req.Name, req.Color, req.Price, req.Stock, req.Code, req.Published, req.CreationDate)
+		p, err := c.service.Put(id, req.Name, req.Color, req.Price, req.Stock, req.Code, req.Published, req.CreationDate)
 
 		if err != nil {
 			ctx.JSON(404, gin.H{
@@ -150,14 +157,21 @@ func (c *Product) Put() gin.HandlerFunc {
 func (c *Product) PatchNamePrice() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req request
+
 		if err := ctx.Bind(&req); err != nil {
 			ctx.JSON(404, gin.H{
 				"error": err.Error(),
 			})
 			return
 		}
+		id, err := strconv.Atoi(ctx.GetHeader("id"))
 
-		p, err := c.service.PatchNamePrice(req.Id, req.Name, req.Price)
+		if err != nil {
+			ctx.JSON(401, gin.H{
+				"error": err.Error(),
+			})
+		}
+		p, err := c.service.PatchNamePrice(id, req.Name, req.Price)
 
 		if err != nil {
 			ctx.JSON(404, gin.H{
@@ -165,7 +179,6 @@ func (c *Product) PatchNamePrice() gin.HandlerFunc {
 			})
 			return
 		}
-
 		ctx.JSON(200, p)
 	}
 }

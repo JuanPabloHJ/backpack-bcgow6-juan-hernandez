@@ -25,8 +25,22 @@ type Repository interface {
 	GetAll() ([]Product, error)
 	lastID() (int, error)
 	PatchNamePrice(id int, name string, price float64) (Product, error)
-	Put(id int, name string, color string, price float64, stock int, code string, published bool, creationDate string) (Product, error)
-	Store(id int, name string, color string, price float64, stock int, code string, published bool, creationDate string) (Product, error)
+	Put(id int,
+		name string,
+		color string,
+		price float64,
+		stock int,
+		code string,
+		published bool,
+		creationDate string) (Product, error)
+	Store(id int,
+		name string,
+		color string,
+		price float64,
+		stock int,
+		code string,
+		published bool,
+		creationDate string) (Product, error)
 }
 
 // Struct repository
@@ -50,8 +64,8 @@ func (r *repository) Store(id int, name string, color string, price float64, sto
 		Stock:        stock,
 		Code:         code,
 		Published:    published,
-		CreationDate: creationDate}
-
+		CreationDate: creationDate,
+	}
 	product.Id = lastID + 1
 	products = append(products, product)
 	lastID = product.Id
@@ -69,7 +83,8 @@ func (r *repository) Put(id int, name string, color string, price float64, stock
 		Stock:        stock,
 		Code:         code,
 		Published:    published,
-		CreationDate: creationDate}
+		CreationDate: creationDate,
+	}
 
 	for i, p := range products {
 		if id == p.Id {
@@ -79,7 +94,6 @@ func (r *repository) Put(id int, name string, color string, price float64, stock
 	}
 
 	return Product{}, errors.New("Product not found")
-
 }
 
 func (r *repository) Delete(id int) error {
@@ -102,7 +116,6 @@ func (r *repository) PatchNamePrice(id int, name string, price float64) (Product
 			products[i].Name = name
 
 			return products[i], nil
-
 		}
 	}
 
