@@ -3,16 +3,14 @@ package main
 import (
 	"os"
 
+	// "testing/cmd/server/handler"
 	"testing/cmd/server/handler"
 	"testing/docs"
 	"testing/internal/products"
 	"testing/pkg/store"
 
-	// "github.com/camconte/backpack-bcgow6-camila-conte/GoWeb/conEstructura/cmd/server/handler"
-	// "github.com/camconte/backpack-bcgow6-camila-conte/GoWeb/conEstructura/docs"
-	// "github.com/camconte/backpack-bcgow6-camila-conte/GoWeb/conEstructura/internal/products"
-	// "github.com/camconte/backpack-bcgow6-camila-conte/GoWeb/conEstructura/pkg/store"
-	// "github.com/gin-gonic/gin"
+	// "github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/GO%20testing/Clase02_Sesion01/cmd/server/handler"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"
