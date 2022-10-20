@@ -2,18 +2,19 @@ package products
 
 import (
 	"fmt"
-	"github.com/camconte/backpack-bcgow6-camila-conte/GoWeb/conEstructura/pkg/store"
+
+	"github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/tree/main/GO_testing/Clase02_Sesion01/pkg/store"
 )
 
-type Product struct{
-	Id int `json:"id"`
-	Name string `json:"name"`
-	Colour string `json:"colour"`
-	Price float64 `json:"price"`
-	Stock int `json:"stock"`
-	Code string `json:"code"`
-	Published bool `json:"published"`
-	CreatedAt string `json:"createdAt"`
+type Product struct {
+	Id        int     `json:"id"`
+	Name      string  `json:"name"`
+	Colour    string  `json:"colour"`
+	Price     float64 `json:"price"`
+	Stock     int     `json:"stock"`
+	Code      string  `json:"code"`
+	Published bool    `json:"published"`
+	CreatedAt string  `json:"createdAt"`
 }
 
 //var productsStorage []Product
@@ -28,53 +29,52 @@ type Repository interface {
 	Delete(id int) error
 }
 
-type repository struct{
+type repository struct {
 	db store.Store
 } //implementa los metodos de la interfaz
 
-//devuelve el repo
+// devuelve el repo
 func NewRepository(db store.Store) Repository {
 	return &repository{
 		db: db,
 	}
 }
 
-func (r *repository) GetAll() ([]Product, error){
+func (r *repository) GetAll() ([]Product, error) {
 	var productsArray []Product
 
 	err := r.db.Read(&productsArray)
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
-	
+
 	return productsArray, nil
 }
 
-func (r *repository) Store(id int, name string, colour string, price float64, stock int, code string, published bool, createdAt string) (Product, error){
+func (r *repository) Store(id int, name string, colour string, price float64, stock int, code string, published bool, createdAt string) (Product, error) {
 	var productsArray []Product
 
 	err := r.db.Read(&productsArray)
-	if err != nil{
+	if err != nil {
 		return Product{}, err
 	}
 
 	p := Product{id, name, colour, price, stock, code, published, createdAt}
 
-
 	productsArray = append(productsArray, p)
 
-	if err := r.db.Write(productsArray); err != nil{
+	if err := r.db.Write(productsArray); err != nil {
 		return Product{}, err
 	}
-	
+
 	return p, nil
 }
 
-func (r *repository) LastID() (int, error){
+func (r *repository) LastID() (int, error) {
 	var productsArray []Product
 
 	err := r.db.Read(&productsArray)
-	if err != nil{
+	if err != nil {
 		return 0, err
 	}
 
@@ -85,28 +85,28 @@ func (r *repository) LastID() (int, error){
 	return productsArray[len(productsArray)-1].Id, nil
 }
 
-//faltan que actualicen el archivo los siguientes metodos:
-func (r *repository) Update(id int, name string, colour string, price float64, stock int, code string, published bool) (Product, error){
+// faltan que actualicen el archivo los siguientes metodos:
+func (r *repository) Update(id int, name string, colour string, price float64, stock int, code string, published bool) (Product, error) {
 	p := Product{
-		Name: name,
-		Colour: colour,
-		Price: price,
-		Stock: stock,
-		Code: code,
+		Name:      name,
+		Colour:    colour,
+		Price:     price,
+		Stock:     stock,
+		Code:      code,
 		Published: published,
 	}
 
 	var productsArray []Product
 
 	err := r.db.Read(&productsArray)
-	if err != nil{
+	if err != nil {
 		return Product{}, err
 	}
 
 	//chequeamos si existe para actualizar el valor correspondiente
 	updated := false
 	for i, product := range productsArray {
-		if product.Id == id{
+		if product.Id == id {
 			p.Id = id
 			p.CreatedAt = product.CreatedAt
 			productsArray[i] = p
@@ -119,27 +119,27 @@ func (r *repository) Update(id int, name string, colour string, price float64, s
 	}
 
 	//actualizamos el archivo
-	if err := r.db.Write(productsArray); err != nil{
+	if err := r.db.Write(productsArray); err != nil {
 		return Product{}, err
 	}
 
 	return p, nil
 }
 
-func (r *repository) UpdateNameAndPrice(id int, name string, price float64) (Product, error){
+func (r *repository) UpdateNameAndPrice(id int, name string, price float64) (Product, error) {
 	var updatedProduct Product
 
 	var productsArray []Product
 
 	err := r.db.Read(&productsArray)
-	if err != nil{
+	if err != nil {
 		return Product{}, err
 	}
 
 	updated := false
 
 	for i, product := range productsArray {
-		if product.Id == id{
+		if product.Id == id {
 			if name != "" {
 				product.Name = name
 				updated = true
@@ -160,7 +160,7 @@ func (r *repository) UpdateNameAndPrice(id int, name string, price float64) (Pro
 	}
 
 	//actualizamos el archivo
-	if err := r.db.Write(productsArray); err != nil{
+	if err := r.db.Write(productsArray); err != nil {
 		return Product{}, err
 	}
 
@@ -172,14 +172,14 @@ func (r *repository) Delete(id int) error {
 	var productsArray []Product
 
 	err := r.db.Read(&productsArray)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	deleted := false
 
 	for i, product := range productsArray {
-		if product.Id == id{
+		if product.Id == id {
 			//lo eliminamos del storage
 			productsArray = append(productsArray[:i], productsArray[i+1:]...)
 			deleted = true
@@ -191,7 +191,7 @@ func (r *repository) Delete(id int) error {
 	}
 
 	//actualizamos el archivo
-	if err := r.db.Write(productsArray); err != nil{
+	if err := r.db.Write(productsArray); err != nil {
 		return err
 	}
 

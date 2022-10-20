@@ -3,13 +3,10 @@ package main
 import (
 	"os"
 
-	// "testing/cmd/server/handler"
-	"testing/cmd/server/handler"
-	"testing/docs"
-	"testing/internal/products"
-	"testing/pkg/store"
-
-	// "github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/GO%20testing/Clase02_Sesion01/cmd/server/handler"
+	"github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/tree/main/GO_testing/Clase02_Sesion01/cmd/server/handler"
+	"github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/tree/main/GO_testing/Clase02_Sesion01/docs"
+	"github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/tree/main/GO_testing/Clase02_Sesion01/internal/products"
+	"github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/tree/main/GO_testing/Clase02_Sesion01/pkg/store"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"

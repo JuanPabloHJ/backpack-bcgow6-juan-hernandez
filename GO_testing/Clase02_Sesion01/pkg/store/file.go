@@ -14,22 +14,22 @@ type Store interface {
 
 type Type string //un alias
 
-const(
-	FileType Type = "file"
+const (
+	FileType  Type = "file"
 	MongoType Type = "mongo"
 )
 
+type fileStore struct {
+	FilePath string
+}
+
 func NewStore(store Type, fileName string) Store {
-	switch store{
-	case FileType: 
+	switch store {
+	case FileType:
 		return &fileStore{fileName}
 	}
 
 	return nil
-}
-
-type fileStore struct{
-	FilePath string
 }
 
 func (fs *fileStore) Write(data interface{}) error {

@@ -6,9 +6,8 @@ import (
 	"os"
 	"strconv"
 
-	"testing/internal/products"
-
-	"github.com/camconte/backpack-bcgow6-camila-conte/GoWeb/conEstructura/pkg/web"
+	"github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/tree/main/GO_testing/Clase02_Sesion01/internal/products"
+	"github.com/JuanPabloHJ/backpack-bcgow6-juan-hernandez/tree/main/GO_testing/Clase02_Sesion01/pkg/web"
 	"github.com/gin-gonic/gin"
 )
 
